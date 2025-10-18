@@ -1,0 +1,11 @@
+{
+  "name": "cat-app-real",
+  "version": "0.0.1",
+  "description": "Chat app for CMPSC 461",
+  "type": "commonjs",
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
+  }
+}
