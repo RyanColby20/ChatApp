@@ -44,3 +44,78 @@
 .read-the-docs {
   color: #888;
 }
+/* Fixed overlay in the top-right corner */
+.connection-controls {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 1000;          /* stay above content */
+  backdrop-filter: blur(6px);
+  background: rgba(0,0,0,0.35); /* tweak for your theme; use a light rgba for light mode */
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  justify-content: space-between
+}
+
+
+.connection-controls button {
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.user-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;          /* space between label and name */
+  font-weight: 600;
+  opacity: 0.9;
+  white-space: nowrap;
+}
+
+.connection-controls .divider {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  display: inline-block;
+  margin: 0 6px;
+  background: currentColor;  /* inherits light/dark color */
+  opacity: 0.6;
+}
+.app-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.chat-box {
+  max-width: 720px;     /* width of the box */
+  width: 100%;
+  margin: 0 auto;       /* centers under the title */
+  text-align: left;     /* left-align text inside (overrides #root) */
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(0,0,0,0.15);  /* the “box” */
+  border-radius: 10px;
+  background: rgba(0,0,0,0.03);        /* subtle fill; tweak for dark mode */
+}
+.message-line {
+  padding: 6px 0;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.message-line:last-child {
+  border-bottom: none;
+}
+.chat-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.chat-form input[type="text"] {
+  flex: 1;
+}
