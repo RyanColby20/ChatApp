@@ -22,8 +22,9 @@ const App = () => {
     const [newMessage, setNewMessage] = useState('');
     const messagesEndRef = useRef(null);
     
-    // --- 1. Initialization and Data Loading ---
+    // Opens on inital render.
     useEffect(() => {
+        // Retrieve saved data(if page was reloaded)
         const savedUsername = sessionStorage.getItem('minimalChatUsername');
         const savedLocalId = sessionStorage.getItem('minimalChatLocalUserId');
         
@@ -31,7 +32,7 @@ const App = () => {
             setUsername(savedUsername);
             setLocalUserId(savedLocalId);
         }
-
+        // Event Handlers
         function onConnect() {
             setIsConnected(true);
         }
@@ -44,16 +45,18 @@ const App = () => {
             setMessages(prev => [...prev, msg]);
         }
         
+        // Register Event listeners, Messages are added to buffer 
+        socket.on('connect', onConnect);
+        socket.on('disconnect', onDisconnect);
+        socket.on('chat:message', onChatMessage);
         socket.on('chat:buffer', (buffer) => {
             setMessages(buffer);
         });
 
-        socket.on('connect', onConnect);
-        socket.on('disconnect', onDisconnect);
-        socket.on('chat:message', onChatMessage);
         socket.connect();
     
         return () => {
+            // Cleanup event listeners on unmount
             socket.off('connect', onConnect);
             socket.off('disconnect', onDisconnect);
             socket.off('chat:message', onChatMessage);
@@ -61,7 +64,7 @@ const App = () => {
          
     }, []);
 
-    // --- 2. Scroll to Bottom Effect ---
+    // Scroll to bottom whenever messages change
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
@@ -83,7 +86,7 @@ const App = () => {
         setNewMessage('');
         };
 
-    // --- 4. Handle Username Entry Render ---
+    // Set username and set a local user ID, Both sent to session storage
     const handleSetUsername = (e) => {
         e.preventDefault();
         const inputName = e.target.elements.nameInput.value.trim();
@@ -94,7 +97,7 @@ const App = () => {
             setLocalUserId(sessionStorage.getItem('minimalChatLocalUserId'));
         }
     };
-
+    // Prompt for username if not set
     if (!username) {
         return (
             <>
