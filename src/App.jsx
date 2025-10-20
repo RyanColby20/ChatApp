@@ -7,9 +7,9 @@ const URL = import.meta.env.PROD ? undefined : "http://localhost:3000";
 export const socket = io(URL, { autoConnect: false });
 
 const fmtTime = (ts) =>
-  ts ? new Date(ts).toLocaleString([], {
-    hour: '2-digit', minute: '2-digit'
-  }) : '...';
+    ts ? new Date(ts).toLocaleString([], {
+        hour: '2-digit', minute: '2-digit'
+    }) : '...';
 
 const App = () => {
 
@@ -44,10 +44,13 @@ const App = () => {
             setMessages(prev => [...prev, msg]);
         }
         
+        socket.on('chat:buffer', (buffer) => {
+            setMessages(buffer);
+        });
+
         socket.on('connect', onConnect);
         socket.on('disconnect', onDisconnect);
         socket.on('chat:message', onChatMessage);
-
         socket.connect();
     
         return () => {
@@ -134,23 +137,23 @@ const App = () => {
 
 
             {/* Messages + Input wrapped in a centered box */}
-<section className="chat-box">
-  <main>
-    {messages.length === 0 ? (
-      <div>Start the conversation.</div>
-    ) : (
-      messages.map((msg) => {
-        const isMine = msg.userId === localUserId;
-        const who = isMine ? 'You' : msg.username;
-        return (
-          <div key={msg.id} className="message-line">
-            {`${who} · ${fmtTime(msg.timestamp)} : ${msg.text}`}
-          </div>
-        );
-      })
-    )}
-    <div ref={messagesEndRef} />
-  </main>
+        <section className="chat-box">
+            <main>
+                {messages.length === 0 ? (
+                    <div>Start the conversation.</div>
+                ) : (
+                messages.map((msg) => {
+                    const isMine = msg.userId === localUserId;
+                    const who = isMine ? 'You' : msg.username;
+                    return (
+                    <div key={msg.id} className="message-line">
+                        {`${who} · ${fmtTime(msg.timestamp)} : ${msg.text}`}
+                    </div>
+                    );
+                })
+                )}
+                <div ref={messagesEndRef} />
+            </main>
 
   <form className="chat-form" onSubmit={sendMessage}>
     <input
