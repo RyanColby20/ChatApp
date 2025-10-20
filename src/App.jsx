@@ -158,19 +158,19 @@ const App = () => {
                 <div ref={messagesEndRef} />
             </main>
 
-  <form className="chat-form" onSubmit={sendMessage}>
-    <input
-      type="text"
-      value={newMessage}
-      onChange={(e) => setNewMessage(e.target.value)}
-      placeholder="Type your message..."
-      disabled={!isConnected}
-    />
-    <button type="submit" disabled={newMessage.trim() === '' || !isConnected}>
-      Send
-    </button>
-  </form>
-</section>
+        <form className="chat-form" onSubmit={sendMessage}>
+            <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Type your message..."
+            disabled={!isConnected}
+            />
+            <button type="submit" disabled={newMessage.trim() === '' || !isConnected}>
+                Send
+            </button>
+        </form>
+        </section>
         </div>
     );
 };
