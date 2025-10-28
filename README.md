@@ -7,5 +7,5 @@ Node Package Manager (npm)
 cd client && npm install && npm run build && cd ..
 cd server && npm install && mkdir -p dist && cp -r ../client/dist/* ./dist/
 
-# every time you want to run
+# every time after initial run 
 node server.js
